@@ -24,7 +24,7 @@ EOT
     name                         = string
     resource_group_name          = string
     sku_name                     = string
-    local_authentication_enabled = optional(bool, true)
+    local_authentication_enabled = optional(bool) # Default: true
     tags                         = optional(map(string))
     cors = optional(object({
       allowed_origins = list(string)
