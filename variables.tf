@@ -29,23 +29,15 @@ EOT
     cors = optional(object({
       allowed_origins = list(string)
     }))
-    data_store = optional(object({
+    data_store = optional(list(object({
       storage_account_id = optional(string)
       unique_name        = string
-    }))
+    })))
     identity = optional(object({
       identity_ids = optional(set(string))
       type         = string
     }))
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.maps_accounts : (
-        v.data_store == null || (length(v.data_store.unique_name) > 0)
-      )
-    ])
-    error_message = "must not be empty"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_maps_account's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -76,6 +68,9 @@ EOT
   #   source:    [from commonids.ValidateUserAssignedIdentityID] !ok
   # path: identity.identity_ids[*]
   #   source:    [from commonids.ValidateUserAssignedIdentityID] err != nil
+  # path: data_store.unique_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: tags
   #   condition: length(value) <= 50
   #   message:   [from tags.Validate: invalid when len(value) > 50]

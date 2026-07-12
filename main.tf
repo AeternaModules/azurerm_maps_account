@@ -16,7 +16,7 @@ resource "azurerm_maps_account" "maps_accounts" {
   }
 
   dynamic "data_store" {
-    for_each = each.value.data_store != null ? [each.value.data_store] : []
+    for_each = each.value.data_store != null ? each.value.data_store : []
     content {
       storage_account_id = data_store.value.storage_account_id
       unique_name        = data_store.value.unique_name
