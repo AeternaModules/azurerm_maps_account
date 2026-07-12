@@ -1,3 +1,7 @@
+output "maps_accounts_id" {
+  description = "Map of id values across all maps_accounts, keyed the same as var.maps_accounts"
+  value       = { for k, v in azurerm_maps_account.maps_accounts : k => v.id }
+}
 output "maps_accounts_cors" {
   description = "Map of cors values across all maps_accounts, keyed the same as var.maps_accounts"
   value       = { for k, v in azurerm_maps_account.maps_accounts : k => v.cors }
