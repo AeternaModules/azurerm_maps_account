@@ -24,7 +24,7 @@ EOT
     name                         = string
     resource_group_name          = string
     sku_name                     = string
-    local_authentication_enabled = optional(bool) # Default: true
+    local_authentication_enabled = optional(bool)
     tags                         = optional(map(string))
     cors = optional(object({
       allowed_origins = list(string)
@@ -71,6 +71,10 @@ EOT
   # path: data_store.unique_name
   #   condition: length(value) > 0
   #   message:   must not be empty
+  # path: data_store.storage_account_id
+  #   source:    [from validationFunctionForResourceID] !ok
+  # path: data_store.storage_account_id
+  #   source:    [from validationFunctionForResourceID] err != nil
   # path: tags
   #   condition: length(value) <= 50
   #   message:   [from tags.Validate: invalid when len(value) > 50]
