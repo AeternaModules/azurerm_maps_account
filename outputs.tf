@@ -4,7 +4,7 @@ output "maps_accounts_id" {
 }
 output "maps_accounts_cors" {
   description = "Map of cors values across all maps_accounts, keyed the same as var.maps_accounts"
-  value       = { for k, v in azurerm_maps_account.maps_accounts : k => v.cors if v.cors != null && length(v.cors) > 0 }
+  value       = { for k, v in azurerm_maps_account.maps_accounts : k => one(v.cors) if v.cors != null && length(v.cors) > 0 }
 }
 output "maps_accounts_data_store" {
   description = "Map of data_store values across all maps_accounts, keyed the same as var.maps_accounts"
@@ -12,7 +12,7 @@ output "maps_accounts_data_store" {
 }
 output "maps_accounts_identity" {
   description = "Map of identity values across all maps_accounts, keyed the same as var.maps_accounts"
-  value       = { for k, v in azurerm_maps_account.maps_accounts : k => v.identity if v.identity != null && length(v.identity) > 0 }
+  value       = { for k, v in azurerm_maps_account.maps_accounts : k => one(v.identity) if v.identity != null && length(v.identity) > 0 }
 }
 output "maps_accounts_local_authentication_enabled" {
   description = "Map of local_authentication_enabled values across all maps_accounts, keyed the same as var.maps_accounts"
